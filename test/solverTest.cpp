@@ -161,16 +161,23 @@ TEST(SolverTest, testSolving)
                               FieldType::CIRCLE, FieldType::CIRCLE, FieldType::CROSS,
                               FieldType::CROSS, FieldType::CROSS, FieldType::EMPTY};
 
-    EXPECT_EQ(8, s.solve(v1, FieldType::CROSS));
-    EXPECT_EQ(8, s.solve(v1, FieldType::CIRCLE));
+    int s1 = s.solve(v1, FieldType::CROSS, 4);
+    EXPECT_EQ(-5, s1);
+    EXPECT_EQ(8, s.getWinningIndex());
+    int s2 = s.solve(v1, FieldType::CIRCLE, 4);
+    EXPECT_EQ(-5, s2);
+    EXPECT_EQ(8, s.getWinningIndex());
 
     std::vector<FieldType> v2{FieldType::CIRCLE, FieldType::CROSS, FieldType::CIRCLE,
                               FieldType::EMPTY, FieldType::EMPTY, FieldType::CROSS,
                               FieldType::CROSS, FieldType::CROSS, FieldType::EMPTY};
-    EXPECT_EQ(4, s.solve(v2, FieldType::CROSS));
+
+    int s3 = s.solve(v2, FieldType::CROSS, 6);
+    EXPECT_EQ(-3, s3);
+    EXPECT_EQ(4, s.getWinningIndex());
 
     std::vector<FieldType> v3{FieldType::CIRCLE, FieldType::CROSS, FieldType::CIRCLE,
                               FieldType::EMPTY, FieldType::CIRCLE, FieldType::CROSS,
                               FieldType::CROSS, FieldType::CROSS, FieldType::CIRCLE};
-    EXPECT_LT(s.solve(v3, FieldType::CROSS), 0); // losing game
+    EXPECT_GT(s.solve(v3, FieldType::CROSS, 8), 0); // losing game
 }
