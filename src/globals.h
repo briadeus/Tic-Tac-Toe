@@ -4,5 +4,17 @@
 #include <string>
 
 const std::string GAME_FIELD_ERROR{"Winning size does not fit into the field size!"};
+const std::string GAME_TITLE{"Tic Tac Toe"};
+const std::string RES_ROOT_PATH{"../resources/"};
+
+const std::string IMAGE_P1{"ham.bmp"};
+const std::string IMAGE_P2{"apple.bmp"};
+
+enum FieldType
+{
+    EMPTY,
+    CROSS,
+    CIRCLE
+};
 
 #endif
