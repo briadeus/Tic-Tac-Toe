@@ -13,5 +13,5 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS} src)
 
-add_executable(${project_BIN}  src/main.cpp src/controller.cpp src/solver.cpp)
+add_executable(${project_BIN}  src/main.cpp src/controller.cpp src/solver.cpp src/view.cpp)
 target_link_libraries(${project_BIN} ${SDL2_LIBRARIES})

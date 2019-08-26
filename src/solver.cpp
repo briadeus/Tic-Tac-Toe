@@ -1,16 +1,13 @@
 #include <algorithm>
 #include <iostream>
 #include <vector>
+#include <algorithm>
 #include "solver.h"
 
-Solver::Solver(const int fieldSizeIn, const int winningSizeIn) : winningSize(winningSizeIn),
-                                                                 fieldSize(fieldSizeIn)
+Solver::Solver()
 {
-    if (winningSizeIn > fieldSizeIn || winningSizeIn < 2)
-    {
-        throw std::invalid_argument(GAME_FIELD_ERROR);
-    }
-    gameField = std::vector<FieldType>(fieldSizeIn * fieldSizeIn, FieldType::EMPTY);
+
+    gameField = std::vector<FieldType>(fieldSize * fieldSize, FieldType::EMPTY);
 }
 
 int Solver::getWinningIndex()
@@ -18,8 +15,19 @@ int Solver::getWinningIndex()
     return winningIndex;
 }
 
-bool Solver::isWinningField( const int index, const FieldType type) {
-return isWinningField(gameField, index, type);
+const std::vector<int> &Solver::getWinningIndices()
+{
+    return winningIndices;
+}
+
+const std::vector<FieldType> &Solver::getGameField()
+{
+    return gameField;
+}
+
+bool Solver::isWinningField(const int index, const FieldType type)
+{
+    return isWinningField(gameField, index, type);
 }
 
 bool Solver::isWinningField(std::vector<FieldType> &gameFieldIn, const int index, const FieldType type)
@@ -28,21 +36,32 @@ bool Solver::isWinningField(std::vector<FieldType> &gameFieldIn, const int index
     int row = index / offset;
     int col = index % offset;
     bool isWinningField = false;
+    bool winsHorizontal{false}, winsVertical{false}, winsDiagTop{false}, winsDiagBot{false};
 
     // set value
     gameFieldIn[index] = type;
 
-    bool winsHorizontal = containsWinningSize(gameFieldIn, type, row, 0, 0, 1);
-    bool winsVertical = containsWinningSize(gameFieldIn, type, 0, col, 1, 0);
-    int rowIndexTop = (col - row >= 0) ? 0 : std::abs(col - row);
-    int colIndexTop = (col - row >= 0) ? col - row : 0;
+    winsHorizontal = containsWinningSize(gameFieldIn, type, row, 0, 0, 1);
+    if (!winsHorizontal)
+    {
+        winsVertical = containsWinningSize(gameFieldIn, type, 0, col, 1, 0);
+    }
 
-    bool winsDiagTop = containsWinningSize(gameFieldIn, type, rowIndexTop, colIndexTop, 1, 1);
+    if (!winsHorizontal && !winsVertical)
+    {
+        int rowIndexTop = (col - row >= 0) ? 0 : std::abs(col - row);
+        int colIndexTop = (col - row >= 0) ? col - row : 0;
 
-    int rowIndexBottom = (row + col <= fieldSize - 1) ? col + row : fieldSize - 1;
-    int colIndexBottom = (row + col <= fieldSize - 1) ? 0 : col - (fieldSize - 1) + row;
+        winsDiagTop = containsWinningSize(gameFieldIn, type, rowIndexTop, colIndexTop, 1, 1);
+    }
 
-    bool winsDiagBot = containsWinningSize(gameFieldIn, type, rowIndexBottom, colIndexBottom, -1, 1);
+    if (!winsHorizontal && !winsVertical && !winsDiagTop)
+    {
+        int rowIndexBottom = (row + col <= fieldSize - 1) ? col + row : fieldSize - 1;
+        int colIndexBottom = (row + col <= fieldSize - 1) ? 0 : col - (fieldSize - 1) + row;
+
+        winsDiagBot = containsWinningSize(gameFieldIn, type, rowIndexBottom, colIndexBottom, -1, 1);
+    }
 
     isWinningField = (winsHorizontal | winsVertical | winsDiagTop | winsDiagBot);
 
@@ -56,6 +75,7 @@ bool Solver::containsWinningSize(const std::vector<FieldType> &gameFieldIn, cons
                                  int row, int col, const int rowIncrement, const int colIncrement)
 {
 
+    std::vector<int> indices(winningSize, -1);
     int count = 0;
     int index = 0;
 
@@ -65,14 +85,17 @@ bool Solver::containsWinningSize(const std::vector<FieldType> &gameFieldIn, cons
         if (gameFieldIn[index] == type)
         {
             count++;
+            indices.push_back(index);
         }
         else
         {
             count = 0;
+            std::fill(indices.begin(), indices.end(), -1);
         }
 
         if (count == winningSize)
         {
+            winningIndices = std::vector<int>(indices);
             return true;
         }
         row = row + rowIncrement;

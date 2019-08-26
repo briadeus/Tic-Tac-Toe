@@ -1,22 +1,19 @@
 #include "controller.h"
 #include "solver.h"
+#include "view.h"
+
 int main()
 {
 
-    int frameSize = 3;
-    int wininningSize = 3;
-    Controller controller(frameSize);
+    View v;
 
-    controller.initializeView();
+    v.initialize();
 
-    Solver s(frameSize, wininningSize);
+    Solver s;
 
-    // plays -on click get value
-    // set display, update state
-    // compute next move
-    // update display
-    // tell if end or continue
-    controller.updateView(s);
+    Controller controller(v, s);
+
+    controller.execute();
 
     return 0;
 }

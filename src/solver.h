@@ -9,16 +9,16 @@
 class Solver
 {
 private:
-int winningIndex;
-    const int winningSize;
-    const int fieldSize;
+    int winningIndex;
+    std::vector<int> winningIndices;
+    const int winningSize{3};
+    const int fieldSize{3};
     std::vector<FieldType> gameField;
     FieldType flipType(FieldType type);
     void dumpGameField(std::vector<FieldType> &gameFieldIn);
 
 public:
-    
-    Solver(const int fieldSizeIn, const int winningSizeIn);
+    Solver();
     bool isWinningField(std::vector<FieldType> &gameFieldIn, const int index, const FieldType type);
     bool isWinningField(const int index, const FieldType type);
 
@@ -35,6 +35,10 @@ public:
     FieldType getFieldState(const int index);
 
     int getWinningIndex();
+
+    const std::vector<int> &getWinningIndices();
+
+    const std::vector<FieldType> &getGameField();
 };
 
 #endif
