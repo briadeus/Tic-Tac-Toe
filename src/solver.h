@@ -10,35 +10,48 @@ class Solver
 {
 private:
     int winningIndex;
-    std::vector<int> winningIndices;
+
     const int winningSize{WINNING_SIZE};
+
     const int fieldSize{FIELD_SIZE};
+
+    std::vector<int> winningIndices;
+
     std::vector<FieldType> gameField;
+
     FieldType flipType(FieldType type);
+
     void dumpGameField(std::vector<FieldType> &gameFieldIn);
 
 public:
-    Solver();
+    Solver() : gameField{std::vector<FieldType>(fieldSize * fieldSize, FieldType::EMPTY)} {}
+
     bool isWinningField(std::vector<FieldType> &gameFieldIn, const int index, const FieldType type);
+
     bool isWinningField(const int index, const FieldType type);
 
-    bool isEmptyField(const int index);
-    bool isEmptyField(const std::vector<FieldType> &gameFieldIn, const int index);
-    void setFieldValue(const int index, const FieldType type);
-
     bool containsWinningSize(const std::vector<FieldType> &gameField, const FieldType type, int row, int col, const int rowIncrement, const int colIncrement);
+
     bool isInField(int row, int col);
 
     int solve(const FieldType type, const int moveCount);
+
     int solve(std::vector<FieldType> &gameField, const FieldType type, int moveCount);
 
-    FieldType getFieldState(const int index);
+    /* The Compiler might inline methods defined in the class */
+    const int getWinningIndex() { return winningIndex; }
 
-    int getWinningIndex();
+    const std::vector<int> &getWinningIndices() { return winningIndices; }
 
-    const std::vector<int> &getWinningIndices();
+    const std::vector<FieldType> &getGameField() { return gameField; }
 
-    const std::vector<FieldType> &getGameField();
+    void setFieldValue(const int index, const FieldType type) { gameField[index] = type; }
+
+    const bool isEmptyField(const std::vector<FieldType> &gameFieldIn, const int index) { return (gameFieldIn[index] == FieldType::EMPTY); }
+
+    bool isEmptyField(const int index) { return isEmptyField(gameField, index); }
+
+    FieldType getFieldState(const int index) { return gameField[index]; }
 };
 
 #endif

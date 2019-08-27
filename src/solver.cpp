@@ -4,27 +4,6 @@
 #include <algorithm>
 #include "solver.h"
 
-Solver::Solver()
-{
-
-    gameField = std::vector<FieldType>(fieldSize * fieldSize, FieldType::EMPTY);
-}
-
-int Solver::getWinningIndex()
-{
-    return winningIndex;
-}
-
-const std::vector<int> &Solver::getWinningIndices()
-{
-    return winningIndices;
-}
-
-const std::vector<FieldType> &Solver::getGameField()
-{
-    return gameField;
-}
-
 bool Solver::isWinningField(const int index, const FieldType type)
 {
     return isWinningField(gameField, index, type);
@@ -105,23 +84,6 @@ bool Solver::containsWinningSize(const std::vector<FieldType> &gameFieldIn, cons
     return false;
 }
 
-bool Solver::isEmptyField(const int index)
-{
-
-    return isEmptyField(gameField, index);
-}
-
-bool Solver::isEmptyField(const std::vector<FieldType> &gameFieldIn, const int index)
-{
-
-    return (gameFieldIn[index] == FieldType::EMPTY);
-}
-
-void Solver::setFieldValue(const int index, const FieldType type)
-{
-    gameField[index] = type;
-}
-
 bool Solver::isInField(int row, int col)
 {
     if (col >= 0 && row >= 0 && col < fieldSize && row < fieldSize)
@@ -177,11 +139,6 @@ int Solver::solve(std::vector<FieldType> &gameFieldIn, const FieldType type, int
     }
 
     return bestScore;
-}
-
-FieldType Solver::getFieldState(const int index)
-{
-    return gameField[index];
 }
 
 /* PRIVATE  */
