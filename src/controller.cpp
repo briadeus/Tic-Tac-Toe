@@ -8,7 +8,7 @@
 
 Controller::Controller(View &view, Solver &solver) : fieldTypeP1(FieldType::CIRCLE),
                                                      fieldTypeP2(FieldType::CROSS), view(view),
-                                                     solver(solver), frameSize(3)
+                                                     solver(solver), frameSize(FIELD_SIZE)
 {
 }
 

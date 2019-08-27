@@ -11,8 +11,8 @@ class Solver
 private:
     int winningIndex;
     std::vector<int> winningIndices;
-    const int winningSize{3};
-    const int fieldSize{3};
+    const int winningSize{WINNING_SIZE};
+    const int fieldSize{FIELD_SIZE};
     std::vector<FieldType> gameField;
     FieldType flipType(FieldType type);
     void dumpGameField(std::vector<FieldType> &gameFieldIn);

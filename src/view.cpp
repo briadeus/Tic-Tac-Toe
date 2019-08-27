@@ -2,7 +2,7 @@
 #include <iostream>
 #include "view.h"
 
-View::View() : gridCellSize(72), frameSize(3)
+View::View() : gridCellSize(72), frameSize(FIELD_SIZE)
 {
     windowWidth = (frameSize * gridCellSize) + 1;
     windowHeight = (frameSize * gridCellSize) + 1;

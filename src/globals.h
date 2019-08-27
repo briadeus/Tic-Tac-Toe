@@ -10,6 +10,9 @@ const std::string RES_ROOT_PATH{"../resources/"};
 const std::string IMAGE_P1{"ham.bmp"};
 const std::string IMAGE_P2{"apple.bmp"};
 
+constexpr int FIELD_SIZE{3};
+constexpr int WINNING_SIZE{3};
+
 enum FieldType
 {
     EMPTY,
