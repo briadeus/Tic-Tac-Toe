@@ -13,7 +13,7 @@ const std::string IMAGE_P2{"apple.bmp"};
 constexpr int FIELD_SIZE{3};
 constexpr int WINNING_SIZE{3};
 
-enum FieldType
+enum class FieldType
 {
     EMPTY,
     CROSS,
