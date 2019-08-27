@@ -6,12 +6,6 @@
 #include "view.h"
 #include "solver.h"
 
-Controller::Controller(View &view, Solver &solver) : fieldTypeP1(FieldType::CIRCLE),
-                                                     fieldTypeP2(FieldType::CROSS), view(view),
-                                                     solver(solver), frameSize(FIELD_SIZE)
-{
-}
-
 void Controller::execute()
 {
 

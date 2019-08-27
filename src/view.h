@@ -31,16 +31,22 @@ private:
 
 public:
     View();
+
     ~View();
+
     int initialize();
 
     void drawGridLines();
+
     void drawGridState(const std::vector<FieldType> &gameField, const FieldType fieldTypeP1);
+
     void drawSolution(const std::vector<int> &indices);
 
-    void update();
-    const int getSelectedIndex();
     void waitForInput(bool &quit, bool &userPlayed);
+
+    void update() { SDL_RenderPresent(renderer); }
+
+    const int getSelectedIndex() { return (gridCursor.x / gridCellSize) + ((gridCursor.y / gridCellSize) * (frameSize)); }
 };
 
 #endif

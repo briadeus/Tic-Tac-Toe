@@ -19,10 +19,6 @@ View::~View()
     SDL_Quit();
 }
 
-void View::update()
-{
-    SDL_RenderPresent(renderer);
-}
 /*
  * Grid Design adapted from
  * https://github.com/catsocks/sdl-grid
@@ -155,11 +151,6 @@ void View::drawSolution(const std::vector<int> &indices)
             SDL_RenderPresent(renderer);
         }
     }
-}
-
-const int View::getSelectedIndex()
-{
-    return (gridCursor.x / gridCellSize) + ((gridCursor.y / gridCellSize) * (frameSize));
 }
 
 void View::waitForInput(bool &quit, bool &userPlayed)
